@@ -12,3 +12,15 @@ ctrl c to stop server
 
 cmd P to navigate through files
  
+ migrations - instructions to the database
+
+python3 manage.py migrate
+(every time you make changes to the structure of your DB)
+
+type - manage 
+if you are unsure of the commands (there are a lot)
+
+If ever changing models you must run:
+
+python3 manage.py makemigrations polls (this creates)
+python3 manage.py migrate (this applies them)
