@@ -3,7 +3,6 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 
-
 from .models import Choice, Question
 
 class IndexView(generic.ListView):
@@ -11,11 +10,13 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
+        """Return the last five published questions."""
         return Question.objects.order_by('-pub_date')[:5]
 
 class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
+
 
 class ResultsView(generic.DetailView):
     model = Question
@@ -32,8 +33,6 @@ def vote(request, question_id):
             'error_message': "You didn't select a choice.",
         })
     else:
-        selected_choice.votes =+ 1
+        selected_choice.votes += 1
         selected_choice.save()
-        #always return an HttpResponseRedirect after successfully dealing with POST data
-        #this prevents the data being posted twice if the user hits the back button
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
